@@ -1,19 +1,21 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AuthModal from "@/components/AuthModal";
 
 const Header = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const location = useLocation();
 
   const navItems = [
-    "Главная",
-    "Услуги",
-    "Мастера",
-    "Прайс",
-    "Галерея",
-    "Акции",
-    "Контакты",
-    "О нас",
+    { name: "Главная", path: "/" },
+    { name: "Услуги", path: "/services" },
+    { name: "Мастера", path: "/masters" },
+    { name: "Прайс", path: "/pricing" },
+    { name: "Галерея", path: "/gallery" },
+    { name: "Акции", path: "/promotions" },
+    { name: "Контакты", path: "/contacts" },
+    { name: "О нас", path: "/about" },
   ];
 
   return (
@@ -30,13 +32,17 @@ const Header = () => {
 
             <nav className="hidden md:flex space-x-6">
               {navItems.map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  className="text-gray-700 hover:text-pink-600 transition-colors duration-200 font-medium"
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className={`text-gray-700 hover:text-pink-600 transition-colors duration-200 font-medium ${
+                    location.pathname === item.path
+                      ? "text-pink-600 font-semibold"
+                      : ""
+                  }`}
                 >
-                  {item}
-                </a>
+                  {item.name}
+                </Link>
               ))}
             </nav>
 
